@@ -2,44 +2,33 @@
 
 אתר סטטי לתרגול מבחן תיאוריה לרישיון משיט סירת מנוע עוצמה א' (משיט 12) בישראל.
 
-## תכונות
-
-- מבחן של 30 שאלות אקראיות בכל פעם
-- ערבוב סדר התשובות בכל שאלה
-- שמירת כל המבחנים ב-localStorage
-- צפייה בתוצאות ובמבחנים קודמים
-- תמיכה בשאלות עם תמונות (מעמודי המאגר)
-
 ## הרצה מקומית
 
 ```bash
-# Python
+cd docs
 python3 -m http.server 8080
-
-# או npx
-npx serve .
 ```
 
 פתחו http://localhost:8080
 
 ## פריסה ב-GitHub Pages
 
-1. צרו repository ב-GitHub והעלו את הקבצים
-2. Settings → Pages → Source: **Deploy from a branch**
-3. Branch: **main** / folder: **/ (root)**
-4. האתר יהיה זמין ב-`https://<username>.github.io/<repo>/`
+האתר מתפרסם אוטומטית מתיקיית `docs/` בענף `main`.
+
+1. דחיפת שינויים ל-`main` מפעילה build חדש
+2. הכתובת: https://tomb30.github.io/meshit-12/
 
 ## מבנה
 
 ```
-index.html          # דף ראשי
-css/styles.css      # עיצוב
-js/app.js           # לוגיקת המבחן
-data/
-  questions.json    # 293+ שאלות עם תשובות
-  image-map.json    # מיפוי תמונות לעמודים
-images/pages/       # תמונות עמודים מה-PDF
-scripts/parse_pdf.py # סקריפט לחילוץ שאלות מה-PDF
+docs/               ← האתר (מה שמפורסם)
+  index.html
+  css/styles.css
+  js/app.js
+  data/questions.json
+  data/image-map.json
+  images/pages/
+scripts/parse_pdf.py  ← חילוץ שאלות מה-PDF (לא מפורסם)
 ```
 
 ## עדכון שאלות מה-PDF
@@ -47,8 +36,10 @@ scripts/parse_pdf.py # סקריפט לחילוץ שאלות מה-PDF
 ```bash
 pdftotext "מאגר שאלות משיט 12.pdf" pdf_raw.txt
 python3 scripts/parse_pdf.py
+# העתק ל-docs:
+cp -r data docs/
 ```
 
 ## רף עובר
 
-70% (21 מתוך 30 תשובות נכונות) — ניתן לשנות ב-`js/app.js` (`PASS_THRESHOLD`).
+70% (21 מתוך 30) — ניתן לשנות ב-`docs/js/app.js` (`PASS_THRESHOLD`).
